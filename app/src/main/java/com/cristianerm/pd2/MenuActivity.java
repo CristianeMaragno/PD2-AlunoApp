@@ -2,16 +2,20 @@ package com.cristianerm.pd2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -27,6 +31,10 @@ public class MenuActivity extends AppCompatActivity {
 
     Button logout;
     TextView identificadorAluno;
+
+    private FirebaseAuth mAuth;
+
+    private static final String TAG = "MenuActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,18 +54,14 @@ public class MenuActivity extends AppCompatActivity {
         logout = (Button) findViewById(R.id.buttonLogout);
         identificadorAluno = (TextView) findViewById(R.id.identificadorAluno);
 
-        String nomeAluno = "EVELLYN RECCO";
-        identificadorAluno.setText(nomeAluno);
-
+        mAuth = FirebaseAuth.getInstance();
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.clear();
-                editor.apply();
-                finish();
+                mAuth.signOut();
+                Intent i = new Intent(MenuActivity.this, MainActivity.class);
+                startActivity(i);
             }
         });
 
@@ -142,5 +146,11 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+
     }
+
+    protected void OnStart(){
+        super.onStart();
+    }
+
 }
