@@ -1,10 +1,5 @@
 package com.cristianerm.pd2;
 
-import com.google.firebase.database.Exclude;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class UserAgendaInformation {
     String alimento;
     String data;

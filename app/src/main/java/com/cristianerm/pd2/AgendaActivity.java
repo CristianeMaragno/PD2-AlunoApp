@@ -52,7 +52,7 @@ public class AgendaActivity extends AppCompatActivity {
         mFirebaseDatase = FirebaseDatabase.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
-        myRef = mFirebaseDatase.getReference().child(userID);
+        myRef = mFirebaseDatase.getReference().child(userID).child("agenda_pessoal");
 
 
         voltar.setOnClickListener(new View.OnClickListener() {
