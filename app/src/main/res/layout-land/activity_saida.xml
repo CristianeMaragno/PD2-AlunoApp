@@ -24,11 +24,11 @@
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
         android:text="SAÍDA"
         android:textColor="@color/Vermelho"
         android:textSize="30sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,19 +38,20 @@
         android:layout_width="311dp"
         android:layout_height="37dp"
         android:text="Solicite a saída rápida para que deixemos o seu filho(a) pronto(a) antes de você chegar."
-        app:layout_constraintBottom_toTopOf="@+id/textViewAutorizar"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textViewAutorizar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.35000002" />
 
     <Button
         android:id="@+id/buttonSaidaRapida"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Saída Rápida"
-        app:layout_constraintBottom_toTopOf="@+id/textViewAutorizar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textView20"
+        app:layout_constraintStart_toStartOf="@+id/textView20"
         app:layout_constraintTop_toBottomOf="@+id/textView20"
         android:textColor="@color/Amarelo"
         android:background="@drawable/button_style"/>
@@ -60,10 +61,10 @@
         android:layout_width="316dp"
         android:layout_height="72dp"
         android:text="No campo abaixo você pode autorizar alguém a retirar a criança da escola hoje. Não esqueça que a pessoa precisa trazer um documento de identificação"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+        app:layout_constraintTop_toTopOf="@+id/textView20" />
 
     <EditText
         android:id="@+id/saidaCampoAutorizacao"
@@ -75,19 +76,19 @@
         android:textColor="@color/Vermelho"
         android:textCursorDrawable="@null"
         app:layout_constraintBottom_toTopOf="@+id/buttonSaidaAutorizar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewAutorizar"
+        app:layout_constraintStart_toStartOf="@+id/textViewAutorizar"
         app:layout_constraintTop_toBottomOf="@+id/textViewAutorizar" />
 
     <Button
         android:id="@+id/buttonSaidaAutorizar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
         android:text="@android:string/ok"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewAutorizar"
+        app:layout_constraintStart_toStartOf="@+id/textViewAutorizar"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAutorizar"
         android:textColor="@color/Amarelo"
         android:background="@drawable/button_style"/>
 

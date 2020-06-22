@@ -11,46 +11,51 @@
         android:id="@+id/buttonVoltarFinanceiro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_marginLeft="26dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginBottom="84dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView18"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="?attr/homeAsUpIndicator" />
+        app:srcCompat="?attr/homeAsUpIndicator"
+        android:tint="@color/Vermelho"
+        android:background="@null"/>
 
     <TextView
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="80dp"
         android:text="FINANCEIRO"
         android:textColor="@color/Vermelho"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonVoltarFinanceiro" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonBoletos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="81dp"
+        android:layout_width="197dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="80dp"
         android:text="Download Boletos"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/buttonImpostoDeRenda"
-        app:layout_constraintStart_toStartOf="@+id/buttonImpostoDeRenda" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/Amarelo"
+        android:background="@drawable/button_style"/>
 
     <Button
         android:id="@+id/buttonImpostoDeRenda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="286dp"
+        android:layout_width="197dp"
+        android:layout_height="80dp"
         android:text="Recibo anual para DIR"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView19"
+        android:textColor="@color/Amarelo"
+        android:background="@drawable/button_style"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

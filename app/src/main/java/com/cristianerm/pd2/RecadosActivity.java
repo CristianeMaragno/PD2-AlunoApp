@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +30,7 @@ public class RecadosActivity extends AppCompatActivity {
 
     ListView recados;
     ImageButton voltar;
+    ProgressBar progressBar;
 
     private static final String TAG = "Recados Activity";
 
@@ -45,6 +47,7 @@ public class RecadosActivity extends AppCompatActivity {
 
         recados = (ListView) findViewById(R.id.listRecados);
         voltar = (ImageButton) findViewById(R.id.buttonVoltarRecados);
+        progressBar = (ProgressBar) findViewById(R.id.progressBarRecados);
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatase = FirebaseDatabase.getInstance();
@@ -64,7 +67,7 @@ public class RecadosActivity extends AppCompatActivity {
             }
         };
 
-        ValueEventListener valueEventListener = myRef.addValueEventListener(new ValueEventListener() {
+        ValueEventListener valueEventListener = myRef.limitToLast(15).addValueEventListener(new ValueEventListener() {
 
             ArrayList<String> recadosList = new ArrayList<String>();
             RecadosCustomAdapter adapter = new RecadosCustomAdapter(recadosList, RecadosActivity.this);
@@ -85,6 +88,7 @@ public class RecadosActivity extends AppCompatActivity {
 
                 }
                 Collections.reverse(recadosList);
+                progressBar.setVisibility(View.GONE);
                 recados.setAdapter(adapter);
             }
 

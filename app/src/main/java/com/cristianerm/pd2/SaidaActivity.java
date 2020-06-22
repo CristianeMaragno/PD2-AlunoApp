@@ -5,16 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -25,6 +30,7 @@ public class SaidaActivity extends AppCompatActivity {
     EditText pessoa_autorizada;
     Button ok_pessoa_autorizada;
     ImageButton voltar;
+    TextView textError;
 
     private static final String TAG = "Saida Activity";
 
@@ -35,7 +41,6 @@ public class SaidaActivity extends AppCompatActivity {
     private DatabaseReference myRef2;
     private String userID;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +50,7 @@ public class SaidaActivity extends AppCompatActivity {
         pessoa_autorizada = (EditText) findViewById(R.id.saidaCampoAutorizacao);
         ok_pessoa_autorizada = (Button) findViewById(R.id.buttonSaidaAutorizar);
         voltar = (ImageButton) findViewById(R.id.buttonVoltarSaida);
+        textError = (TextView) findViewById(R.id.textErrorAutorizar);
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatase = FirebaseDatabase.getInstance();
@@ -98,15 +104,20 @@ public class SaidaActivity extends AppCompatActivity {
                 String autorizar_pessoa = pessoa_autorizada.getText().toString();
                 Toast.makeText(SaidaActivity.this, "Autorizar: " + autorizar_pessoa, Toast.LENGTH_LONG).show();
 
-                Date currentTime = Calendar.getInstance().getTime();
-                String data_atual = currentTime.toString();
-                String hora_data = "Hora: "+data_atual.substring(11,19) + " Data: " + data_atual.substring(4,10);
+                if(!autorizar_pessoa.equals("")){
+                    textError.setText("");
+                    Date currentTime = Calendar.getInstance().getTime();
+                    String data_atual = currentTime.toString();
+                    String hora_data = "Hora: "+data_atual.substring(11,19) + " Data: " + data_atual.substring(4,10);
 
-                String key = myRef2.push().getKey();
-                myRef2.child(key).child("nome_pessoa_autorizada").setValue(autorizar_pessoa);
-                myRef2.child(key).child("hora_e_data").setValue(hora_data);
+                    String key = myRef2.push().getKey();
+                    myRef2.child(key).child("nome_pessoa_autorizada").setValue(autorizar_pessoa);
+                    myRef2.child(key).child("hora_e_data").setValue(hora_data);
 
-                Toast.makeText(SaidaActivity.this, "Pessoa autorizada", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SaidaActivity.this, "Pessoa autorizada", Toast.LENGTH_SHORT).show();
+                }else{
+                    textError.setText("Você não preencheu todos os campos");
+                }
             }
         });
 

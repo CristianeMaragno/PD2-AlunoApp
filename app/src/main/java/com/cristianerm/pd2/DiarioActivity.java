@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +28,7 @@ public class DiarioActivity extends AppCompatActivity {
 
     ListView diario;
     ImageButton voltar;
+    ProgressBar progressBar;
 
     private static final String TAG = "DiarioActivity";
 
@@ -43,6 +45,7 @@ public class DiarioActivity extends AppCompatActivity {
 
         diario = (ListView) findViewById(R.id.listDiario);
         voltar = (ImageButton) findViewById(R.id.buttonVoltarDiario);
+        progressBar = (ProgressBar) findViewById(R.id.progressBarDiario);
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatase = FirebaseDatabase.getInstance();
@@ -76,13 +79,13 @@ public class DiarioActivity extends AppCompatActivity {
                     Toast.makeText(DiarioActivity.this, turma, Toast.LENGTH_SHORT).show();
                     myRef2.addValueEventListener(new ValueEventListener() {
 
-                        ArrayList<String> posts_diario = new ArrayList<String>();
-                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(DiarioActivity.this, android.R.layout.simple_list_item_1, posts_diario);
+                        ArrayList<String> array  = new ArrayList<>();
+                        AgendaCustomAdapter adapter = new AgendaCustomAdapter(array, DiarioActivity.this);
 
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            posts_diario.clear();
-                            arrayAdapter.notifyDataSetChanged();
+                            array.clear();
+                            adapter.notifyDataSetChanged();
 
                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                 DiarioTurmaInformation dInfo = new DiarioTurmaInformation();
@@ -92,11 +95,12 @@ public class DiarioActivity extends AppCompatActivity {
                                 Log.d(TAG, "showData: Data: " + dInfo.getData());
                                 Log.d(TAG, "showData: Mensagem: " + dInfo.getMensagem());
 
-                                posts_diario.add(dInfo.getData() + "\n" + dInfo.getMensagem());
+                                array.add(dInfo.getData() + "\n" + dInfo.getMensagem());
                             }
 
-                            Collections.reverse(posts_diario);
-                            diario.setAdapter(arrayAdapter);
+                            Collections.reverse(array);
+                            progressBar.setVisibility(View.GONE);
+                            diario.setAdapter(adapter);
                         }
 
                         @Override

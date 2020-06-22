@@ -79,7 +79,7 @@ public class AgendaActivity extends AppCompatActivity {
         myRef.limitToLast(15).addValueEventListener(new ValueEventListener() {
 
             ArrayList<String> array  = new ArrayList<>();
-            ArrayAdapter adapter = new ArrayAdapter(AgendaActivity.this, android.R.layout.simple_list_item_1, array);
+            AgendaCustomAdapter adapter = new AgendaCustomAdapter(array, AgendaActivity.this);
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

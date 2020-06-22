@@ -77,8 +77,7 @@ public class RecadosCustomAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 String key = myRef.push().getKey();
-                //myRef.child(key).child("position_lida").setValue(recadosList.get(position)); //Pega o Texto
-                myRef.child(key).child("position_lida").setValue(position);
+                myRef.child(key).child("mensagem_lida").setValue(recadosList.get(position));
                 myRef.child(key).child("user").setValue(userID);
             }
         });

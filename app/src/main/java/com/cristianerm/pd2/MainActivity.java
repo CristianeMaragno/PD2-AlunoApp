@@ -9,13 +9,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     EditText aluno;
     EditText senha;
     ProgressBar progressBar;
+    TextView textError;
 
     private static final String TAG = "Main Activity";
 
@@ -38,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         senha = (EditText) findViewById(R.id.senhaAluno);
         progressBar = (ProgressBar) findViewById(R.id.progressBarLogin);
         progressBar.setVisibility(View.GONE);
+        textError = (TextView) findViewById(R.id.textErrorLogin);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -50,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
                 if(!email.equals("") && !pass.equals("")){
                     signIn(email, pass);
                 }else{
-                    Toast.makeText(getApplicationContext(), "Você não preencheu todos os campos", Toast.LENGTH_LONG).show();
+                    progressBar.setVisibility(View.GONE);
+                    textError.setText("Você não preencheu todos os campos");
                 }
             }
         });
@@ -65,22 +75,23 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success
+                            textError.setText("");
                             Log.d(TAG, "signInWithEmail:success");
                             progressBar.setVisibility(View.GONE);
                             goToMenuActivity();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
                         }
-
                         // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
                             progressBar.setVisibility(View.GONE);
-                            Toast.makeText(MainActivity.this, "email ou senha incorreta",
-                                    Toast.LENGTH_SHORT).show();
+                            try {
+                                throw task.getException();
+                            } catch(FirebaseAuthInvalidCredentialsException e) {
+                                textError.setText("Email ou senha incorreta");
+                            } catch(FirebaseAuthUserCollisionException e) {
+                                textError.setText("Tente novamente");
+                            } catch(Exception e) {
+                                Log.e(TAG, e.getMessage());
+                            }
                         }
                     }
                 });
