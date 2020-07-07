@@ -2,6 +2,8 @@ package com.cristianerm.pd2;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,12 +25,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class DiarioActivity extends AppCompatActivity {
 
-    ListView diario;
     ImageButton voltar;
-    ProgressBar progressBar;
+    RecyclerView mRecyclerView;
+    ImageAdapterDiario mAdapter;
+    List<DiarioTurmaInformation> mInformation;
 
     private static final String TAG = "DiarioActivity";
 
@@ -43,9 +47,12 @@ public class DiarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diario);
 
-        diario = (ListView) findViewById(R.id.listDiario);
         voltar = (ImageButton) findViewById(R.id.buttonVoltarDiario);
-        progressBar = (ProgressBar) findViewById(R.id.progressBarDiario);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_diario);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mInformation = new ArrayList<>();
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatase = FirebaseDatabase.getInstance();
@@ -77,35 +84,27 @@ public class DiarioActivity extends AppCompatActivity {
                     String turma = uInfo.getTurma();
                     DatabaseReference myRef2 = mFirebaseDatase.getReference().child("diario_professor").child(turma);
                     Toast.makeText(DiarioActivity.this, turma, Toast.LENGTH_SHORT).show();
+
                     myRef2.addValueEventListener(new ValueEventListener() {
-
-                        ArrayList<String> array  = new ArrayList<>();
-                        AgendaCustomAdapter adapter = new AgendaCustomAdapter(array, DiarioActivity.this);
-
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            array.clear();
-                            adapter.notifyDataSetChanged();
+                            mAdapter = new ImageAdapterDiario(DiarioActivity.this, mInformation);
+
+                            mInformation.clear();
+                            mAdapter.notifyDataSetChanged();
 
                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                DiarioTurmaInformation dInfo = new DiarioTurmaInformation();
-                                dInfo.setData(ds.getValue(DiarioTurmaInformation.class).getData());
-                                dInfo.setMensagem(ds.getValue(DiarioTurmaInformation.class).getMensagem());
-
-                                Log.d(TAG, "showData: Data: " + dInfo.getData());
-                                Log.d(TAG, "showData: Mensagem: " + dInfo.getMensagem());
-
-                                array.add(dInfo.getData() + "\n" + dInfo.getMensagem());
+                                DiarioTurmaInformation information = ds.getValue(DiarioTurmaInformation.class);
+                                mInformation.add(information);
                             }
+                            Collections.reverse(mInformation);
+                            mRecyclerView.setAdapter(mAdapter);
 
-                            Collections.reverse(array);
-                            progressBar.setVisibility(View.GONE);
-                            diario.setAdapter(adapter);
                         }
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
-
+                            Toast.makeText(DiarioActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

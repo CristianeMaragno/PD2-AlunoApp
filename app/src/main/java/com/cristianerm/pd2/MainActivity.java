@@ -1,7 +1,10 @@
 package com.cristianerm.pd2;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -35,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Main Activity";
 
     private FirebaseAuth mAuth;
+    private FirebaseDatabase mFirebaseDatase;
+    private DatabaseReference myRef;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
                             // Sign in success
                             textError.setText("");
                             Log.d(TAG, "signInWithEmail:success");
-                            progressBar.setVisibility(View.GONE);
-                            goToMenuActivity();
+
+                            checkStatus();
                         }
                         // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
@@ -103,8 +110,46 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    public void goToMenuActivity(){
-        Intent i = new Intent(this, MenuActivity.class);
-        startActivity(i);
+    public void checkStatus(){
+        mFirebaseDatase = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        userID = user.getUid();
+        myRef = mFirebaseDatase.getReference().child(userID).child("info_user");
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    UserInformation uInfo = new UserInformation();
+                    uInfo.setStatus(ds.getValue(UserInformation.class).getStatus());
+
+                    Log.d(TAG, "showData: Status: " + uInfo.getStatus());
+                    String status = uInfo.getStatus();
+                    progressBar.setVisibility(View.GONE);
+
+                    if(status.equals("Aluno(a)")){
+                        Intent i = new Intent(MainActivity.this, MenuActivity.class);
+                        startActivity(i);
+                    }else{
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("Opa!")
+                                .setMessage("Este aplicativo é para o uso exclusivo dos alunos do PD2! Faça download na Play Store " +
+                                        "do aplicativo para professores(as) ou do aplicativo para direção!")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // Continue with delete operation
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
     }
 }

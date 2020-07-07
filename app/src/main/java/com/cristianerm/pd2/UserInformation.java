@@ -3,6 +3,7 @@ package com.cristianerm.pd2;
 public class UserInformation {
     String nome;
     String turma;
+    String status;
 
     public UserInformation() {
 
@@ -22,5 +23,13 @@ public class UserInformation {
 
     public void setTurma(String turma) {
         this.turma = turma;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

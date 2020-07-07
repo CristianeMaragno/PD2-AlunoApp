@@ -1,26 +1,33 @@
 package com.cristianerm.pd2;
 
 public class DiarioTurmaInformation {
-    String data;
-    String mensagem;
+
+    private String mDate;
+    private String mMensagem;
+    private String mImageUrl;
 
     public DiarioTurmaInformation() {
-
+        //empty constructor needed
     }
 
-    public String getData() {
-        return data;
+    public String getDate() {
+        return mDate;
     }
-
-    public void setData(String data) {
-        this.data = data;
+    public void setDate(String date) {
+        mDate = date;
     }
-
     public String getMensagem() {
-        return mensagem;
+        return mMensagem;
+    }
+    public void setMensagem(String mensagem) {
+        mMensagem = mensagem;
+    }
+    public String getImageUrl() {
+        return mImageUrl;
+    }
+    public void setImageUrl(String imageUrl) {
+        mImageUrl = imageUrl;
     }
 
-    public void setMensagem(String mensagem) {
-        this.mensagem = mensagem;
-    }
 }
+
