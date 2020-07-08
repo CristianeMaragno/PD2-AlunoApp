@@ -9,8 +9,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -18,59 +21,111 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 
 public class FinanceiroActivity extends AppCompatActivity {
 
-    Button boletos;
+    ListView listViewBoletos;
     Button recibo_anual;
     ImageButton voltar;
 
+    private static final String TAG = "Financeiro Activity";
+
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseDatabase mFirebaseDatase;
+    private DatabaseReference myRef;
+    private DatabaseReference myRef2;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_financeiro);
 
-        boletos = (Button) findViewById(R.id.buttonBoletos);
+        listViewBoletos = (ListView) findViewById(R.id.listFinanceiro);
         recibo_anual = (Button) findViewById(R.id.buttonImpostoDeRenda);
         voltar = (ImageButton) findViewById(R.id.buttonVoltarFinanceiro);
 
         mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatase = FirebaseDatabase.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        userID = user.getUid();
+
+        int ano = Calendar.getInstance().get(Calendar.YEAR);
+        String ano_atual = String.valueOf(ano);
+
+        myRef = mFirebaseDatase.getReference().child(userID).child("boletos").child(ano_atual);
+        myRef2 = mFirebaseDatase.getReference().child("sol_recibo_anual");
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = mAuth.getCurrentUser();
                 if (user != null) {
-                    Toast.makeText(FinanceiroActivity.this, "User sighed in", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(FinanceiroActivity.this, "User sighed in", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(FinanceiroActivity.this, "User not sighed in", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(FinanceiroActivity.this, "User not sighed in", Toast.LENGTH_SHORT).show();
                 }
             }
         };
 
+        myRef.addValueEventListener(new ValueEventListener() {
 
-        boletos.setOnClickListener(new View.OnClickListener() {
+            ArrayList<String> array  = new ArrayList<>();
+            AgendaCustomAdapter adapter = new AgendaCustomAdapter(array, FinanceiroActivity.this);
+
             @Override
-            public void onClick(View v) {
-                FirebaseStorage storage = FirebaseStorage.getInstance();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                array.clear();
+                adapter.notifyDataSetChanged();
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                    FinanceiroInformation fInfo = new FinanceiroInformation();
+                    fInfo.setMes(ds.getValue(FinanceiroInformation.class).getMes());
+                    fInfo.setAno(ds.getValue(FinanceiroInformation.class).getAno());
+
+                    Log.d(TAG, "showData: Mes: " + fInfo.getMes());
+                    Log.d(TAG, "showData: Ano: " + fInfo.getAno());
+
+                    array.add(fInfo.getMes() + " " + fInfo.getAno());
+                }
+
+                listViewBoletos.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        listViewBoletos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedFromList = (listViewBoletos.getItemAtPosition(position)).toString();
 
                 Bundle bundle = getIntent().getExtras();
                 String nome_aluno = bundle.getString("nome_aluno");
-                int ano = Calendar.getInstance().get(Calendar.YEAR);
-                String ano_atual = String.valueOf(ano);
-                String boleto_aluno = nome_aluno+"_"+ano_atual+".pdf";
 
-                StorageReference gsReference = storage.getReferenceFromUrl("gs://pd2apps.appspot.com/Boletos/"+boleto_aluno);
+                String nome_boleto = nome_aluno + "_" + selectedFromList + ".pdf";
+
+                Toast.makeText(FinanceiroActivity.this, nome_boleto, Toast.LENGTH_SHORT).show();
+
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference gsReference = storage.getReferenceFromUrl("gs://pd2apps.appspot.com/Boletos/"+nome_boleto);
 
                 gsReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
@@ -84,42 +139,25 @@ public class FinanceiroActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         exception.printStackTrace();// Handle any errors
-                        Toast.makeText(FinanceiroActivity.this, "Boletos ainda não disponíveis", Toast.LENGTH_LONG).show();
+                        Toast.makeText(FinanceiroActivity.this, "Tente novamente mais tarde", Toast.LENGTH_LONG).show();
                     }
                 });
-
-            }
-        });
+            }});
 
         recibo_anual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-
                 Bundle bundle = getIntent().getExtras();
                 String nome_aluno = bundle.getString("nome_aluno");
-                int ano = Calendar.getInstance().get(Calendar.YEAR);
-                String ano_atual = String.valueOf(ano);
-                String ir_aluno = "IR_"+nome_aluno+"_"+ano_atual+".pdf";
 
-                StorageReference gsReference = storage.getReferenceFromUrl("gs://pd2apps.appspot.com/IR/"+ir_aluno);
+                Date currentTime = Calendar.getInstance().getTime();
+                String data_atual = currentTime.toString();
+                String data_e_hora = "Hora: "+data_atual.substring(11,19) + " Data: " + data_atual.substring(4,10);
 
-                gsReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        Toast.makeText(FinanceiroActivity.this, "Download iniciado", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        startActivity(intent);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        exception.printStackTrace();// Handle any errors
-                        Toast.makeText(FinanceiroActivity.this, "Recibo para IR ainda não disponível", Toast.LENGTH_LONG).show();
-                    }
-                });
-
+                String key = myRef2.push().getKey();
+                myRef2.child(key).child("nome").setValue(nome_aluno);
+                myRef2.child(key).child("data").setValue(data_e_hora);
+                Toast.makeText(FinanceiroActivity.this, "Solicitação efetuada", Toast.LENGTH_LONG).show();
             }
         });
 

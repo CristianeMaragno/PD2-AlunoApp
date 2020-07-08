@@ -15,7 +15,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_logo" />
+        app:srcCompat="@drawable/icon_logo"
+        android:paddingRight="@dimen/padding_right_icon_menu"
+        android:paddingLeft="@dimen/padding_left_icon_menu"/>
 
     <ImageView
         android:id="@+id/calendarioIcon"

@@ -32,7 +32,7 @@ public class AgendaCustomAdapter extends BaseAdapter implements ListAdapter {
 
     @Override
     public long getItemId(int position) {
-        //return array.get(pos).getId();
+        //return array.get(position).getId();
         return 0;
     }
 
@@ -51,4 +51,5 @@ public class AgendaCustomAdapter extends BaseAdapter implements ListAdapter {
 
         return view;
     }
+
 }
