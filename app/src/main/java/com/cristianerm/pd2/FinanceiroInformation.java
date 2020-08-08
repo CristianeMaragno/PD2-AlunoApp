@@ -2,7 +2,7 @@ package com.cristianerm.pd2;
 
 public class FinanceiroInformation {
     String mes;
-    Long ano;
+    String ano;
     String boleto_url;
 
     public FinanceiroInformation(){
@@ -17,11 +17,11 @@ public class FinanceiroInformation {
         this.mes = mes;
     }
 
-    public Long getAno() {
+    public String getAno() {
         return ano;
     }
 
-    public void setAno(Long ano) {
+    public void setAno(String ano) {
         this.ano = ano;
     }
 
