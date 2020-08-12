@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseDatabase mFirebaseDatase;
     private DatabaseReference myRef;
+    private DatabaseReference myRefUserDeletado;
     private String userID;
 
     @Override
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         textError = (TextView) findViewById(R.id.textErrorLogin);
 
         mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatase = FirebaseDatabase.getInstance();
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void signIn(String email, String password) {
+    private void signIn(final String email, String password) {
         Log.d(TAG, "signIn:" + email);
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
@@ -85,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                             textError.setText("");
                             Log.d(TAG, "signInWithEmail:success");
 
+                            checkUser(email);
                             checkStatus();
                         }
                         // [START_EXCLUDE]
@@ -105,13 +108,51 @@ public class MainActivity extends AppCompatActivity {
         // [END sign_in_with_email]
     }
 
+    public void checkUser(final String email){
+        myRefUserDeletado = mFirebaseDatase.getReference().child("users_deletados");
+
+        myRefUserDeletado.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    UserInformation uInfo = new UserInformation();
+                    uInfo.setEmail(ds.getValue(UserInformation.class).getEmail());
+
+                    Log.d(TAG, "showData: Email: " + uInfo.getEmail());
+                    String email_database = uInfo.getEmail();
+                    progressBar.setVisibility(View.GONE);
+
+                    if(email_database.equals(email)){
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("Opa!")
+                                .setMessage("Este usuário não tem mais acesso ao aplicativo! Entre em contato com a direção caso" +
+                                        " tenha havido algum engano")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // Continue with delete operation
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+
+                        mAuth.signOut();
+                        aluno.getText().clear();
+                        senha.getText().clear();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+    }
     @Override
     public void onStart() {
         super.onStart();
     }
 
     public void checkStatus(){
-        mFirebaseDatase = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
@@ -143,6 +184,9 @@ public class MainActivity extends AppCompatActivity {
                                 })
                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                 .show();
+
+                        aluno.getText().clear();
+                        senha.getText().clear();
                     }
                 }
             }
