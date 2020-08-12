@@ -63,9 +63,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                String email = aluno.getText().toString();
+                String email = aluno.getText().toString().trim();
+                email.replaceAll("\\s+","");
                 String pass = senha.getText().toString();
                 if(!email.equals("") && !pass.equals("")){
+                    login.setEnabled(false);
+                    aluno.setEnabled(false);
+                    senha.setEnabled(false);
                     signIn(email, pass);
                 }else{
                     progressBar.setVisibility(View.GONE);
@@ -92,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                         // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
+                            login.setEnabled(true);
+                            aluno.setEnabled(true);
+                            senha.setEnabled(true);
                             progressBar.setVisibility(View.GONE);
                             try {
                                 throw task.getException();
