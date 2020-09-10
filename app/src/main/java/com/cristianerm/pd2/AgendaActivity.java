@@ -29,7 +29,6 @@ public class AgendaActivity extends AppCompatActivity {
 
     ListView agenda;
     ImageButton voltar;
-    ProgressBar progressBar;
 
     private static final String TAG = "Agenda Activity";
 
@@ -46,7 +45,6 @@ public class AgendaActivity extends AppCompatActivity {
 
         agenda = (ListView) findViewById(R.id.listAgenda);
         voltar = (ImageButton) findViewById(R.id.buttonVoltarAgenda);
-        progressBar = (ProgressBar) findViewById(R.id.progressBarAgenda);
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatase = FirebaseDatabase.getInstance();
@@ -100,7 +98,6 @@ public class AgendaActivity extends AppCompatActivity {
                 }
 
                 Collections.reverse(array);
-                progressBar.setVisibility(View.GONE);
                 agenda.setAdapter(adapter);
             }
 
