@@ -76,7 +76,7 @@ public class AgendaActivity extends AppCompatActivity {
 
         myRef.limitToLast(15).addValueEventListener(new ValueEventListener() {
 
-            ArrayList<String> array  = new ArrayList<>();
+            ArrayList<CustomObject> array  = new ArrayList<>();
             AgendaCustomAdapter adapter = new AgendaCustomAdapter(array, AgendaActivity.this);
 
             @Override
@@ -93,7 +93,8 @@ public class AgendaActivity extends AppCompatActivity {
                     Log.d(TAG, "showData: Alimentação: " + uInfo.getAlimento());
                     Log.d(TAG, "showData: Sono: " + uInfo.getSono());
 
-                    array.add(uInfo.getData() + "\n" + uInfo.getAlimento() + "\n" + uInfo.getSono());
+                    //array.add(uInfo.getData(), uInfo.getAlimento() + "\n" + uInfo.getSono());
+                    array.add(new CustomObject(uInfo.getData(), uInfo.getAlimento() + "\n" + uInfo.getSono()));
 
                 }
 

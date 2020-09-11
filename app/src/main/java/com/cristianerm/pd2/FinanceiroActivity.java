@@ -86,7 +86,7 @@ public class FinanceiroActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
 
             ArrayList<String> array  = new ArrayList<>();
-            AgendaCustomAdapter adapter = new AgendaCustomAdapter(array, FinanceiroActivity.this);
+            FinanceiroCustomAdapter adapter = new FinanceiroCustomAdapter(array, FinanceiroActivity.this);
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
