@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class RecadosCustomAdapter extends BaseAdapter implements ListAdapter {
-    private ArrayList<String> recadosList = new ArrayList<String>();
+    private ArrayList<CustomObject> recadosList = new ArrayList<CustomObject>();
     private Context context;
 
     private FirebaseDatabase mFirebaseDatase;
@@ -34,7 +34,7 @@ public class RecadosCustomAdapter extends BaseAdapter implements ListAdapter {
     private String userID;
 
 
-    public RecadosCustomAdapter(ArrayList<String> recadosList, Context context) {
+    public RecadosCustomAdapter(ArrayList<CustomObject> recadosList, Context context) {
         this.recadosList = recadosList;
         this.context = context;
     }
@@ -72,8 +72,10 @@ public class RecadosCustomAdapter extends BaseAdapter implements ListAdapter {
         }
 
         //Handle TextView and display string from your list
-        TextView listItemText = (TextView)view.findViewById(R.id.textRecados);
-        listItemText.setText(recadosList.get(position));
+        TextView textRecadosDate = (TextView)view.findViewById(R.id.text_recados_date);
+        TextView textRecados = (TextView)view.findViewById(R.id.text_recados);
+        textRecadosDate.setText(recadosList.get(position).getDate());
+        textRecados.setText(recadosList.get(position).getTextInfo());
 
         //Handle buttons and add onClickListeners
         final Button buttonVisto = (Button)view.findViewById(R.id.buttonRecadoVisto);

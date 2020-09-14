@@ -69,7 +69,7 @@ public class RecadosActivity extends AppCompatActivity {
 
         ValueEventListener valueEventListener = myRef.limitToLast(15).addValueEventListener(new ValueEventListener() {
 
-            ArrayList<String> recadosList = new ArrayList<String>();
+            ArrayList<CustomObject> recadosList = new ArrayList<CustomObject>();
             RecadosCustomAdapter adapter = new RecadosCustomAdapter(recadosList, RecadosActivity.this);
 
             @Override
@@ -84,7 +84,7 @@ public class RecadosActivity extends AppCompatActivity {
                     Log.d(TAG, "showData: Data: " + rInfo.getData());
                     Log.d(TAG, "showData: Mensagem: " + rInfo.getMensagem());
 
-                    recadosList.add(rInfo.getData() + "\n" + rInfo.getMensagem() + "\n");
+                    recadosList.add(new CustomObject(rInfo.getData(), rInfo.getMensagem()));
 
                 }
                 Collections.reverse(recadosList);
