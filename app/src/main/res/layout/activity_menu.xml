@@ -27,8 +27,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="140dp"
                     app:srcCompat="@drawable/icon_logo"
+                    android:layout_marginTop="7dp"
                     android:paddingRight="@dimen/padding_right_icon_menu"
-                    android:paddingLeft="@dimen/padding_left_icon_menu"/>
+                    android:paddingLeft="@dimen/padding_left_icon_menu" />
 
                 <TextView
                     android:id="@+id/identificadorAluno"
@@ -298,7 +299,7 @@
                 android:textColor="@color/colorPrimary"
                 android:text="LOG OUT"
                 android:layout_marginTop="15dp"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center" />
 
         </LinearLayout>
 

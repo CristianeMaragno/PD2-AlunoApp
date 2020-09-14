@@ -30,16 +30,7 @@
             android:clipChildren="false"
             android:clipToPadding="false"
             android:orientation="vertical"
-            android:padding="24dp"
             android:paddingTop="16dp">
-<!--
-            <ImageButton
-                android:id="@+id/buttonVoltarAgenda"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:tint="@color/Vermelho"
-                app:srcCompat="?attr/homeAsUpIndicator"/>-->
 
             <TextView
                 android:id="@+id/textView3"
