@@ -12,6 +12,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/tool_bar_agenda"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:navigationIcon="@drawable/ic_arrow"
+                style="@style/Widget.MaterialComponents.Toolbar.Primary"/>
+        </com.google.android.material.appbar.AppBarLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,14 +32,14 @@
             android:orientation="vertical"
             android:padding="24dp"
             android:paddingTop="16dp">
-
+<!--
             <ImageButton
                 android:id="@+id/buttonVoltarAgenda"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:tint="@color/Vermelho"
-                app:srcCompat="?attr/homeAsUpIndicator"/>
+                app:srcCompat="?attr/homeAsUpIndicator"/>-->
 
             <TextView
                 android:id="@+id/textView3"

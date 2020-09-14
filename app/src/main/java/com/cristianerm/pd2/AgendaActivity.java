@@ -1,9 +1,12 @@
 package com.cristianerm.pd2;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,7 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 public class AgendaActivity extends AppCompatActivity {
 
     ListView agenda;
-    ImageButton voltar;
+    Toolbar toolbar_agenda;
 
     private static final String TAG = "Agenda Activity";
 
@@ -38,13 +41,18 @@ public class AgendaActivity extends AppCompatActivity {
     private DatabaseReference myRef;
     private String userID;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agenda);
 
         agenda = (ListView) findViewById(R.id.listAgenda);
-        voltar = (ImageButton) findViewById(R.id.buttonVoltarAgenda);
+        toolbar_agenda = (Toolbar) findViewById(R.id.tool_bar_agenda);
+        setSupportActionBar(toolbar_agenda);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar_agenda.setTitle("");
+        toolbar_agenda.setSubtitle("");
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatase = FirebaseDatabase.getInstance();
@@ -52,10 +60,9 @@ public class AgendaActivity extends AppCompatActivity {
         userID = user.getUid();
         myRef = mFirebaseDatase.getReference().child(userID).child("agenda_pessoal");
 
-
-        voltar.setOnClickListener(new View.OnClickListener() {
+        toolbar_agenda.setNavigationOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent i;
                 i = new Intent(AgendaActivity.this, MenuActivity.class);
                 startActivity(i);
