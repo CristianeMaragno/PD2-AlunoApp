@@ -2,6 +2,7 @@ package com.cristianerm.pd2;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,8 +30,7 @@ import java.util.Collections;
 public class RecadosActivity extends AppCompatActivity {
 
     ListView recados;
-    ImageButton voltar;
-    ProgressBar progressBar;
+    Toolbar toolbar_recados;
 
     private static final String TAG = "Recados Activity";
 
@@ -46,14 +46,26 @@ public class RecadosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recados);
 
         recados = (ListView) findViewById(R.id.listRecados);
-        voltar = (ImageButton) findViewById(R.id.buttonVoltarRecados);
-        progressBar = (ProgressBar) findViewById(R.id.progressBarRecados);
+        toolbar_recados = (Toolbar) findViewById(R.id.tool_bar_recados);
+        setSupportActionBar(toolbar_recados);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar_recados.setTitle("");
+        toolbar_recados.setSubtitle("");
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatase = FirebaseDatabase.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
         myRef = mFirebaseDatase.getReference().child("recados");
+
+        toolbar_recados.setNavigationOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent i;
+                i = new Intent(RecadosActivity.this, MenuActivity.class);
+                startActivity(i);
+            }
+        });
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -88,22 +100,12 @@ public class RecadosActivity extends AppCompatActivity {
 
                 }
                 Collections.reverse(recadosList);
-                progressBar.setVisibility(View.GONE);
                 recados.setAdapter(adapter);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-
-        voltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i;
-                i = new Intent(RecadosActivity.this, MenuActivity.class);
-                startActivity(i);
             }
         });
 
