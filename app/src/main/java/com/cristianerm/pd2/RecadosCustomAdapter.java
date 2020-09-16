@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class RecadosCustomAdapter extends BaseAdapter implements ListAdapter {
-    private ArrayList<CustomObject> recadosList = new ArrayList<CustomObject>();
+    private ArrayList<CustomObjectRecados> recadosList = new ArrayList<CustomObjectRecados>();
     private Context context;
 
     private FirebaseDatabase mFirebaseDatase;
@@ -34,7 +34,7 @@ public class RecadosCustomAdapter extends BaseAdapter implements ListAdapter {
     private String userID;
 
 
-    public RecadosCustomAdapter(ArrayList<CustomObject> recadosList, Context context) {
+    public RecadosCustomAdapter(ArrayList<CustomObjectRecados> recadosList, Context context) {
         this.recadosList = recadosList;
         this.context = context;
     }
@@ -80,6 +80,11 @@ public class RecadosCustomAdapter extends BaseAdapter implements ListAdapter {
         //Handle buttons and add onClickListeners
         final Button buttonVisto = (Button)view.findViewById(R.id.buttonRecadoVisto);
 
+        String lido_status = recadosList.get(position).getLidoStatus();
+        if(lido_status.equals("Yes")){
+            buttonVisto.setEnabled(false);
+        }
+
         myRef2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -87,13 +92,14 @@ public class RecadosCustomAdapter extends BaseAdapter implements ListAdapter {
                     UserInformation uInfo = new UserInformation();
                     uInfo.setNome(ds.getValue(UserInformation.class).getNome());
 
-                     final String nome_aluno = uInfo.getNome();
+                    final String nome_aluno = uInfo.getNome();
                     buttonVisto.setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v) {
                             String key = myRef.push().getKey();
                             myRef.child(key).child("mensagem_lida").setValue(recadosList.get(position));
                             myRef.child(key).child("user").setValue(nome_aluno);
+                            buttonVisto.setEnabled(false);
                         }
                     });
                 }
