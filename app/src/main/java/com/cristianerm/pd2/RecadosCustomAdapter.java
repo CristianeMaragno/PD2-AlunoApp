@@ -31,6 +31,7 @@ public class RecadosCustomAdapter extends BaseAdapter implements ListAdapter {
     private FirebaseAuth mAuth;
     private DatabaseReference myRef;
     private DatabaseReference myRef2;
+    private DatabaseReference myRef3;
     private String userID;
 
 
@@ -65,6 +66,7 @@ public class RecadosCustomAdapter extends BaseAdapter implements ListAdapter {
         userID = user.getUid();
         myRef = mFirebaseDatase.getReference().child("recados_lidos");
         myRef2 = mFirebaseDatase.getReference().child(userID).child("info_user");
+        myRef3 = mFirebaseDatase.getReference().child("recados");
 
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -99,7 +101,35 @@ public class RecadosCustomAdapter extends BaseAdapter implements ListAdapter {
                             String key = myRef.push().getKey();
                             myRef.child(key).child("mensagem_lida").setValue(recadosList.get(position));
                             myRef.child(key).child("user").setValue(nome_aluno);
+
+                            myRef3.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                        RecadosInformation rInfo = new RecadosInformation();
+                                        rInfo.setMensagem(ds.getValue(RecadosInformation.class).getMensagem());
+
+                                        String selected_message = recadosList.get(position).getTextInfo();
+                                        String database_message = rInfo.getMensagem();
+
+                                        Log.d("RecadosCustomAdapter", "selected_message: " + selected_message);
+                                        Log.d("RecadosCustomAdapter", "database_message: " + database_message);
+
+                                        if(selected_message.equals(database_message)){
+                                            String recado_key = ds.getKey();
+                                            myRef3.child(recado_key).child("lido").setValue("Yes");
+                                        }
+
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
                             buttonVisto.setEnabled(false);
+
                         }
                     });
                 }
@@ -113,4 +143,6 @@ public class RecadosCustomAdapter extends BaseAdapter implements ListAdapter {
 
         return view;
     }
+
+
 }
