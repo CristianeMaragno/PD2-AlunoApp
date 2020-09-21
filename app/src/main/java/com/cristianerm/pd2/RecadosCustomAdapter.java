@@ -110,8 +110,23 @@ public class RecadosCustomAdapter extends BaseAdapter implements ListAdapter {
                                 rInfo.setDate(ds.getValue(RecadosInformation.class).getDate());
                                 rInfo.setTextInfo(ds.getValue(RecadosInformation.class).getTextInfo());
 
-                                Log.d("RecadosCustomAdapter", "date: " + rInfo.getDate());
-                                Log.d("RecadosCustomAdapter", "text: " + rInfo.getTextInfo());
+                                String read_date = rInfo.getDate();
+                                String read_text = rInfo.getTextInfo();
+
+                                String selected_date = recadosList.get(position).getDate();
+                                String selected_text = recadosList.get(position).getTextInfo();
+
+                                Log.d("RecadosCustomAdapter", "read_text: " + read_text);
+                                Log.d("RecadosCustomAdapter", "selected_text: " + selected_text);
+
+                                if(read_text != null & selected_text != null & read_date != null & selected_date !=null){
+                                    if(read_text.equals(selected_text) & read_date.equals(selected_date)){
+                                        buttonVisto.setEnabled(false);
+                                    }
+                                }
+
+                                //Log.d("RecadosCustomAdapter", "date: " + rInfo.getDate());
+                                //Log.d("RecadosCustomAdapter", "text: " + rInfo.getTextInfo());
                             }
                         }
                         @Override
