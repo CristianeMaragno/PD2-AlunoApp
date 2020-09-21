@@ -92,12 +92,11 @@ public class RecadosActivity extends AppCompatActivity {
                     RecadosInformation rInfo = new RecadosInformation();
                     rInfo.setData(ds.getValue(RecadosInformation.class).getData());
                     rInfo.setMensagem(ds.getValue(RecadosInformation.class).getMensagem());
-                    rInfo.setLido(ds.getValue(RecadosInformation.class).getLido());
 
                     Log.d(TAG, "showData: Data: " + rInfo.getData());
                     Log.d(TAG, "showData: Mensagem: " + rInfo.getMensagem());
 
-                    recadosList.add(new CustomObjectRecados(rInfo.getData(), rInfo.getMensagem(), rInfo.getLido()));
+                    recadosList.add(new CustomObjectRecados(rInfo.getData(), rInfo.getMensagem()));
 
                 }
                 Collections.reverse(recadosList);

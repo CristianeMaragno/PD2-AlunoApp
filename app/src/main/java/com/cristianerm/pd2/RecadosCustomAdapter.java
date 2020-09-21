@@ -31,7 +31,6 @@ public class RecadosCustomAdapter extends BaseAdapter implements ListAdapter {
     private FirebaseAuth mAuth;
     private DatabaseReference myRef;
     private DatabaseReference myRef2;
-    private DatabaseReference myRef3;
     private String userID;
 
 
@@ -64,9 +63,7 @@ public class RecadosCustomAdapter extends BaseAdapter implements ListAdapter {
         mFirebaseDatase = FirebaseDatabase.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
-        myRef = mFirebaseDatase.getReference().child("recados_lidos");
-        myRef2 = mFirebaseDatase.getReference().child(userID).child("info_user");
-        myRef3 = mFirebaseDatase.getReference().child("recados");
+        myRef = mFirebaseDatase.getReference().child(userID).child("info_user");
 
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -82,12 +79,8 @@ public class RecadosCustomAdapter extends BaseAdapter implements ListAdapter {
         //Handle buttons and add onClickListeners
         final Button buttonVisto = (Button)view.findViewById(R.id.buttonRecadoVisto);
 
-        String lido_status = recadosList.get(position).getLidoStatus();
-        if(lido_status.equals("Yes")){
-            buttonVisto.setEnabled(false);
-        }
 
-        myRef2.addValueEventListener(new ValueEventListener() {
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -95,44 +88,41 @@ public class RecadosCustomAdapter extends BaseAdapter implements ListAdapter {
                     uInfo.setNome(ds.getValue(UserInformation.class).getNome());
 
                     final String nome_aluno = uInfo.getNome();
+                    myRef2 = mFirebaseDatase.getReference().child("recados_lidos").child(nome_aluno);
+
+
                     buttonVisto.setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v) {
-                            String key = myRef.push().getKey();
-                            myRef.child(key).child("mensagem_lida").setValue(recadosList.get(position));
-                            myRef.child(key).child("user").setValue(nome_aluno);
+                            String key = myRef2.push().getKey();
+                            String date = recadosList.get(position).getDate();
+                            String textInfo = recadosList.get(position).getTextInfo();
+                            myRef2.child(key).child("date").setValue(date);
+                            myRef2.child(key).child("textInfo").setValue(textInfo);
+                        }
+                    });
 
-                            myRef3.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                        RecadosInformation rInfo = new RecadosInformation();
-                                        rInfo.setMensagem(ds.getValue(RecadosInformation.class).getMensagem());
+                    myRef2.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                RecadosInformation rInfo = new RecadosInformation();
+                                rInfo.setDate(ds.getValue(RecadosInformation.class).getDate());
+                                rInfo.setTextInfo(ds.getValue(RecadosInformation.class).getTextInfo());
 
-                                        String selected_message = recadosList.get(position).getTextInfo();
-                                        String database_message = rInfo.getMensagem();
-
-                                        Log.d("RecadosCustomAdapter", "selected_message: " + selected_message);
-                                        Log.d("RecadosCustomAdapter", "database_message: " + database_message);
-
-                                        if(selected_message.equals(database_message)){
-                                            String recado_key = ds.getKey();
-                                            myRef3.child(recado_key).child("lido").setValue("Yes");
-                                        }
-
-                                    }
-                                }
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });
-
-                            buttonVisto.setEnabled(false);
+                                Log.d("RecadosCustomAdapter", "date: " + rInfo.getDate());
+                                Log.d("RecadosCustomAdapter", "text: " + rInfo.getTextInfo());
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
                         }
                     });
+
                 }
+
+
             }
 
             @Override

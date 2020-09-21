@@ -2,8 +2,9 @@ package com.cristianerm.pd2;
 
 public class RecadosInformation {
     String data;
+    String date;
     String mensagem;
-    String lido;
+    String textInfo;
 
     public RecadosInformation(){
 
@@ -25,11 +26,19 @@ public class RecadosInformation {
         this.mensagem = mensagem;
     }
 
-    public String getLido() {
-        return lido;
+    public String getTextInfo() {
+        return textInfo;
     }
 
-    public void setLido(String lido) {
-        this.lido = lido;
+    public void setTextInfo(String textInfo) {
+        this.textInfo = textInfo;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }
