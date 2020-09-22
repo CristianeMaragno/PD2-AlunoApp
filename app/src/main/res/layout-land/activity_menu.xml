@@ -194,8 +194,8 @@
         android:text="Log out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@color/Vermelho"
-        android:background="@drawable/button_style2"/>
+        android:backgroundTint="@color/Amarelo"
+        android:textColor="@color/colorPrimary"/>
 
     <TextView
         android:id="@+id/identificadorAluno"
