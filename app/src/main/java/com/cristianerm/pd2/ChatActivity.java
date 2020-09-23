@@ -1,6 +1,7 @@
 package com.cristianerm.pd2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.ComponentName;
 import android.content.Intent;
@@ -15,7 +16,7 @@ public class ChatActivity extends AppCompatActivity {
 
     Button pedagogico;
     Button diretoria;
-    //ImageButton voltar;
+    Toolbar toolbar_chat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,20 @@ public class ChatActivity extends AppCompatActivity {
         pedagogico = (Button) findViewById(R.id.buttonChatPedagogico);
         diretoria = (Button) findViewById(R.id.buttonChatDireção);
 
-        //voltar= (ImageButton) findViewById(R.id.buttonVoltarChat);
+        toolbar_chat = (Toolbar) findViewById(R.id.tool_bar_chat);
+        setSupportActionBar(toolbar_chat);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar_chat.setTitle("");
+        toolbar_chat.setSubtitle("");
+
+        toolbar_chat.setNavigationOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent i;
+                i = new Intent(ChatActivity.this, MenuActivity.class);
+                startActivity(i);
+            }
+        });
 
         pedagogico.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,15 +60,7 @@ public class ChatActivity extends AppCompatActivity {
                 startActivity(sendIntent);
             }
         });
-
-        /*voltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i;
-                i = new Intent(ChatActivity.this, MenuActivity.class);
-                startActivity(i);
-            }
-        });*/
+        
     }
 
 }
