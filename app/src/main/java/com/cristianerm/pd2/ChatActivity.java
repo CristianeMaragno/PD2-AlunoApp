@@ -15,7 +15,7 @@ public class ChatActivity extends AppCompatActivity {
 
     Button pedagogico;
     Button diretoria;
-    ImageButton voltar;
+    //ImageButton voltar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class ChatActivity extends AppCompatActivity {
         pedagogico = (Button) findViewById(R.id.buttonChatPedagogico);
         diretoria = (Button) findViewById(R.id.buttonChatDireção);
 
-        voltar = (ImageButton) findViewById(R.id.buttonVoltarChat);
+        //voltar= (ImageButton) findViewById(R.id.buttonVoltarChat);
 
         pedagogico.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,14 +47,14 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        voltar.setOnClickListener(new View.OnClickListener() {
+        /*voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i;
                 i = new Intent(ChatActivity.this, MenuActivity.class);
                 startActivity(i);
             }
-        });
+        });*/
     }
 
 }
