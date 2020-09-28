@@ -60,7 +60,7 @@ public class ChatActivity extends AppCompatActivity {
                 startActivity(sendIntent);
             }
         });
-        
+
     }
 
 }
