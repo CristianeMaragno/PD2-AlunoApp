@@ -2,6 +2,7 @@ package com.cristianerm.pd2;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,7 +30,7 @@ public class SaidaActivity extends AppCompatActivity {
     Button saida;
     EditText pessoa_autorizada;
     Button ok_pessoa_autorizada;
-   // ImageButton voltar;
+    Toolbar toolbar_saida;
     TextView textError;
 
     private static final String TAG = "Saida Activity";
@@ -46,10 +47,15 @@ public class SaidaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saida);
 
+        toolbar_saida = (Toolbar) findViewById(R.id.tool_bar_saida);
+        setSupportActionBar(toolbar_saida);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar_saida.setTitle("");
+        toolbar_saida.setSubtitle("");
+
         saida = (Button) findViewById(R.id.buttonSaidaRapida);
         pessoa_autorizada = (EditText) findViewById(R.id.saidaCampoAutorizacao);
         ok_pessoa_autorizada = (Button) findViewById(R.id.buttonSaidaAutorizar);
-       // voltar = (ImageButton) findViewById(R.id.buttonVoltarSaida);
         textError = (TextView) findViewById(R.id.textErrorAutorizar);
 
         mAuth = FirebaseAuth.getInstance();
@@ -59,15 +65,14 @@ public class SaidaActivity extends AppCompatActivity {
         myRef = mFirebaseDatase.getReference().child("solicitar_saida");
         myRef2 = mFirebaseDatase.getReference().child(userID).child("Responsaveis_auto_saida");
 
-
-        /*voltar.setOnClickListener(new View.OnClickListener() {
+        toolbar_saida.setNavigationOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent i;
                 i = new Intent(SaidaActivity.this, MenuActivity.class);
                 startActivity(i);
             }
-        });*/
+        });
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
