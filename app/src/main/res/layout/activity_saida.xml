@@ -5,62 +5,98 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/Amarelo"
-    tools:context=".MainActivity">
+    tools:context=".SaidaActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:orientation="vertical"
-        android:padding="24dp"
-        android:paddingTop="16dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Solicite a saída rápida para que deixemos o seu filho(a) pronto(a) antes de você chegar." />
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/buttonSaidaRapida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Saída Rápida"
-            android:layout_gravity="center"/>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tool_bar_chat"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <TextView
-            android:id="@+id/textViewAutorizar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No campo abaixo você pode autorizar alguém a retirar a criança da escola hoje. Não esqueça que a pessoa precisa trazer um documento de identificação" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/CampoAutorizacao_text"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:hint="Nome do autorizado(a)"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingTop="16dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/saidaCampoAutorizacao"
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SAÍDA"
+                android:textColor="@color/Vermelho"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Solicite a saída rápida para que deixemos o seu filho(a) pronto(a) antes de você chegar." />
+
+            <Button
+                android:id="@+id/buttonSaidaRapida"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Saída Rápida"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="55dp"/>
+
+            <TextView
+                android:id="@+id/textViewAutorizar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="No campo abaixo você pode autorizar alguém a retirar a criança da escola hoje. Não esqueça que a pessoa precisa trazer um documento de identificação" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/CampoAutorizacao_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:hint="Nome do autorizado(a)"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                >
 
-        <Button
-            android:id="@+id/buttonSaidaAutorizar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@android:string/ok"
-            android:layout_gravity="center"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/saidaCampoAutorizacao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/textErrorAutorizar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/Vermelho" />
+            <Button
+                android:id="@+id/buttonSaidaAutorizar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@android:string/ok"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"/>
+
+            <TextView
+                android:id="@+id/textErrorAutorizar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Vermelho" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
