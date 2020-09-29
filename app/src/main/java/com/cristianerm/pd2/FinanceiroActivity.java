@@ -2,6 +2,7 @@ package com.cristianerm.pd2;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -40,7 +41,7 @@ public class FinanceiroActivity extends AppCompatActivity {
 
     ListView listViewBoletos;
     Button recibo_anual;
-    ImageButton voltar;
+    Toolbar toolbar_financeiro;
 
     private static final String TAG = "Financeiro Activity";
 
@@ -58,7 +59,11 @@ public class FinanceiroActivity extends AppCompatActivity {
 
         listViewBoletos = (ListView) findViewById(R.id.listFinanceiro);
         recibo_anual = (Button) findViewById(R.id.buttonImpostoDeRenda);
-        voltar = (ImageButton) findViewById(R.id.buttonVoltarFinanceiro);
+        toolbar_financeiro = (Toolbar) findViewById(R.id.tool_bar_financeiro);
+        setSupportActionBar(toolbar_financeiro);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar_financeiro.setTitle("");
+        toolbar_financeiro.setSubtitle("");
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatase = FirebaseDatabase.getInstance();
@@ -70,6 +75,15 @@ public class FinanceiroActivity extends AppCompatActivity {
 
         myRef = mFirebaseDatase.getReference().child(userID).child("boletos").child(ano_atual);
         myRef2 = mFirebaseDatase.getReference().child("sol_recibo_anual");
+
+        toolbar_financeiro.setNavigationOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent i;
+                i = new Intent(FinanceiroActivity.this, MenuActivity.class);
+                startActivity(i);
+            }
+        });
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -161,14 +175,6 @@ public class FinanceiroActivity extends AppCompatActivity {
             }
         });
 
-        voltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i;
-                i = new Intent(FinanceiroActivity.this, MenuActivity.class);
-                startActivity(i);
-            }
-        });
     }
 
     @Override
