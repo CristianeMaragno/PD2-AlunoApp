@@ -2,6 +2,7 @@ package com.cristianerm.pd2;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,7 +30,7 @@ import java.util.List;
 
 public class DiarioActivity extends AppCompatActivity {
 
-    ImageButton voltar;
+    Toolbar toolbar_diario;
     RecyclerView mRecyclerView;
     ImageAdapterDiario mAdapter;
     List<DiarioTurmaInformation> mInformation;
@@ -47,7 +48,11 @@ public class DiarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diario);
 
-        voltar = (ImageButton) findViewById(R.id.buttonVoltarDiario);
+        toolbar_diario = (Toolbar) findViewById(R.id.tool_bar_diario);
+        setSupportActionBar(toolbar_diario);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar_diario.setTitle("");
+        toolbar_diario.setSubtitle("");
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_diario);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -59,6 +64,15 @@ public class DiarioActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
         myRef = mFirebaseDatase.getReference().child(userID).child("info_user");
+
+        toolbar_diario.setNavigationOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent i;
+                i = new Intent(DiarioActivity.this, MenuActivity.class);
+                startActivity(i);
+            }
+        });
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -114,14 +128,6 @@ public class DiarioActivity extends AppCompatActivity {
             }
         });
 
-        voltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i;
-                i = new Intent(DiarioActivity.this, MenuActivity.class);
-                startActivity(i);
-            }
-        });
     }
 
     @Override
