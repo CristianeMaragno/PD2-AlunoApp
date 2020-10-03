@@ -23,17 +23,27 @@
                     android:padding="16dp">
 
                         <TextView
-                            android:id="@+id/text_mensagem_diario"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="8dp"
-                            android:text="Mensagem"/>
+                            android:id="@+id/text_diario_date"
+                            android:text="Date"
+                            android:textAppearance="?attr/textAppearanceBody2"
+                            android:textColor="?android:attr/textColorSecondary"/>
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/text_mensagem_diario"
+                            android:text="Mensagem"
+                            android:textSize="18sp"
+                            />
 
                         <ImageView
                             android:id="@+id/image_view_diario"
                             android:layout_width="match_parent"
-                            android:layout_height="200dp" />
+                            android:layout_height="200dp"
+                            android:layout_marginTop="15dp"/>
 
                 </LinearLayout>
 
