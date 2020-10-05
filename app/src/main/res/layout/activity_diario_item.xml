@@ -39,11 +39,16 @@
                             android:textSize="18sp"
                             />
 
-                        <ImageView
-                            android:id="@+id/image_view_diario"
+                        <LinearLayout android:id="@+id/layout_to_hide"
                             android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:layout_marginTop="15dp"/>
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp">
+
+                            <ImageView
+                                android:id="@+id/image_view_diario"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp" />
+                        </LinearLayout>
 
                 </LinearLayout>
 
