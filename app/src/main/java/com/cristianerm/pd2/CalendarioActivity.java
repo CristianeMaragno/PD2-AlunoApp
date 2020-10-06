@@ -34,7 +34,7 @@ import java.util.TimeZone;
 
 public class CalendarioActivity extends AppCompatActivity {
 
-    ImageButton voltar;
+    //ImageButton voltar;
     MaterialCalendarView calendarView;
     ListView datas_calendario_escolar;
     String mes_atual;
@@ -55,7 +55,7 @@ public class CalendarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendario);
 
-        voltar = (ImageButton) findViewById(R.id.buttonVoltarCalendario);
+        //voltar = (ImageButton) findViewById(R.id.buttonVoltarCalendario);
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
         datas_calendario_escolar = (ListView) findViewById(R.id.listCalendar);
 
@@ -110,14 +110,14 @@ public class CalendarioActivity extends AppCompatActivity {
             }
         });
 
-        voltar.setOnClickListener(new View.OnClickListener() {
+        /*voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i;
                 i = new Intent(CalendarioActivity.this, MenuActivity.class);
                 startActivity(i);
             }
-        });
+        });*/
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
