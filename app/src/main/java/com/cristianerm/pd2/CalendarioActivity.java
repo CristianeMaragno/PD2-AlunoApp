@@ -2,6 +2,7 @@ package com.cristianerm.pd2;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,7 +35,7 @@ import java.util.TimeZone;
 
 public class CalendarioActivity extends AppCompatActivity {
 
-    //ImageButton voltar;
+    Toolbar toolbar_calendario;
     MaterialCalendarView calendarView;
     ListView datas_calendario_escolar;
     String mes_atual;
@@ -55,7 +56,12 @@ public class CalendarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendario);
 
-        //voltar = (ImageButton) findViewById(R.id.buttonVoltarCalendario);
+        toolbar_calendario = (Toolbar) findViewById(R.id.tool_bar_calendario);
+        setSupportActionBar(toolbar_calendario);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar_calendario.setTitle("");
+        toolbar_calendario.setSubtitle("");
+
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
         datas_calendario_escolar = (ListView) findViewById(R.id.listCalendar);
 
@@ -73,6 +79,15 @@ public class CalendarioActivity extends AppCompatActivity {
         Toast.makeText(CalendarioActivity.this, data_atual, Toast.LENGTH_LONG).show();
 
         myRef = mFirebaseDatase.getReference().child("calendario_pedagogico").child(data_atual);
+
+        toolbar_calendario.setNavigationOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent i;
+                i = new Intent(CalendarioActivity.this, MenuActivity.class);
+                startActivity(i);
+            }
+        });
 
         calendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
             @Override
@@ -109,15 +124,6 @@ public class CalendarioActivity extends AppCompatActivity {
                 });
             }
         });
-
-        /*voltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i;
-                i = new Intent(CalendarioActivity.this, MenuActivity.class);
-                startActivity(i);
-            }
-        });*/
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
