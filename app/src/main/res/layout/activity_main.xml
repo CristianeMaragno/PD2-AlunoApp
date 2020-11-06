@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/Vermelho"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="textPassword"
             android:textColor="@color/Vermelho"
             android:textCursorDrawable="@null"
             android:layout_marginBottom="15dp"/>
