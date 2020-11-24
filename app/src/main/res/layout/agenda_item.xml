@@ -24,7 +24,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/text_agenda_date"
+                android:id="@+id/text_view_date_agenda"
                 android:text="Date"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="?android:attr/textColorSecondary"/>
@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/text_agenda_info"
+                android:id="@+id/text_view_text_agenda"
                 android:text="Info"
                 android:textSize="18sp"
                 />

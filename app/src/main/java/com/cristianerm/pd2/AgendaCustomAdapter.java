@@ -47,10 +47,11 @@ public class AgendaCustomAdapter extends BaseAdapter implements ListAdapter {
         }
 
         //Handle TextView and display string from your list
-        TextView textAgendaDate = (TextView)view.findViewById(R.id.text_agenda_date);
-        TextView textAgendaInfo = (TextView)view.findViewById(R.id.text_agenda_info);
-        textAgendaDate.setText(array.get(position).getDate());
-        textAgendaInfo.setText(array.get(position).getTextInfo());
+        TextView text_date = (TextView)view.findViewById(R.id.text_view_date_agenda);
+        TextView text_info = (TextView)view.findViewById(R.id.text_view_text_agenda);
+
+        text_date.setText(array.get(position).getDate());
+        text_info.setText(array.get(position).getTextInfo());
 
         return view;
     }

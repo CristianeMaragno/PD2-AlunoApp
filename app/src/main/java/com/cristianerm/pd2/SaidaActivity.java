@@ -27,11 +27,11 @@ import java.util.Date;
 
 public class SaidaActivity extends AppCompatActivity {
 
-    Button saida;
-    EditText pessoa_autorizada;
-    Button ok_pessoa_autorizada;
     Toolbar toolbar_saida;
-    TextView textError;
+    Button button_solicitar_saida;
+    EditText edit_text_pessoa_autorizada;
+    Button button_autorizar_saida;
+    TextView text_view_error;
 
     private static final String TAG = "Saida Activity";
 
@@ -53,10 +53,10 @@ public class SaidaActivity extends AppCompatActivity {
         toolbar_saida.setTitle("");
         toolbar_saida.setSubtitle("");
 
-        saida = (Button) findViewById(R.id.buttonSaidaRapida);
-        pessoa_autorizada = (EditText) findViewById(R.id.saidaCampoAutorizacao);
-        ok_pessoa_autorizada = (Button) findViewById(R.id.buttonSaidaAutorizar);
-        textError = (TextView) findViewById(R.id.textErrorAutorizar);
+        button_solicitar_saida = (Button) findViewById(R.id.button_saida_rapida);
+        edit_text_pessoa_autorizada = (EditText) findViewById(R.id.edit_text_campo_autorizacao_saida);
+        button_autorizar_saida = (Button) findViewById(R.id.button_autorizar_saida);
+        text_view_error = (TextView) findViewById(R.id.text_view_error_saida);
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatase = FirebaseDatabase.getInstance();
@@ -86,7 +86,7 @@ public class SaidaActivity extends AppCompatActivity {
             }
         };
 
-        saida.setOnClickListener(new View.OnClickListener() {
+        button_solicitar_saida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = getIntent().getExtras();
@@ -103,14 +103,14 @@ public class SaidaActivity extends AppCompatActivity {
             }
         });
 
-        ok_pessoa_autorizada.setOnClickListener(new View.OnClickListener() {
+        button_autorizar_saida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String autorizar_pessoa = pessoa_autorizada.getText().toString();
+                String autorizar_pessoa = edit_text_pessoa_autorizada.getText().toString();
                 Toast.makeText(SaidaActivity.this, "Autorizar: " + autorizar_pessoa, Toast.LENGTH_LONG).show();
 
                 if(!autorizar_pessoa.equals("")){
-                    textError.setText("");
+                    text_view_error.setText("");
                     Date currentTime = Calendar.getInstance().getTime();
                     String data_atual = currentTime.toString();
                     String hora_data = "Hora: "+data_atual.substring(11,19) + " Data: " + data_atual.substring(4,10);
@@ -121,7 +121,7 @@ public class SaidaActivity extends AppCompatActivity {
 
                     Toast.makeText(SaidaActivity.this, "Pessoa autorizada", Toast.LENGTH_SHORT).show();
                 }else{
-                    textError.setText("Você não preencheu todos os campos");
+                    text_view_error.setText("Você não preencheu todos os campos");
                 }
             }
         });

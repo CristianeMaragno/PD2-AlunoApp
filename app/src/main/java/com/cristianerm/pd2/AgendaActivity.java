@@ -30,7 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AgendaActivity extends AppCompatActivity {
 
-    ListView agenda;
+    ListView list_view_agenda;
     Toolbar toolbar_agenda;
 
     private static final String TAG = "Agenda Activity";
@@ -47,12 +47,13 @@ public class AgendaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agenda);
 
-        agenda = (ListView) findViewById(R.id.listAgenda);
         toolbar_agenda = (Toolbar) findViewById(R.id.tool_bar_agenda);
         setSupportActionBar(toolbar_agenda);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar_agenda.setTitle("");
         toolbar_agenda.setSubtitle("");
+
+        list_view_agenda = (ListView) findViewById(R.id.list_view_agenda);
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatase = FirebaseDatabase.getInstance();
@@ -106,7 +107,7 @@ public class AgendaActivity extends AppCompatActivity {
                 }
 
                 Collections.reverse(array);
-                agenda.setAdapter(adapter);
+                list_view_agenda.setAdapter(adapter);
             }
 
             @Override

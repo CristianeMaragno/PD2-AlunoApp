@@ -14,23 +14,23 @@ import android.widget.Toast;
 
 public class ChatActivity extends AppCompatActivity {
 
-    Button pedagogico;
-    Button diretoria;
     Toolbar toolbar_chat;
+    Button button_pedagogico;
+    Button button_diretoria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        pedagogico = (Button) findViewById(R.id.buttonChatPedagogico);
-        diretoria = (Button) findViewById(R.id.buttonChatDireção);
-
         toolbar_chat = (Toolbar) findViewById(R.id.tool_bar_chat);
         setSupportActionBar(toolbar_chat);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar_chat.setTitle("");
         toolbar_chat.setSubtitle("");
+
+        button_pedagogico = (Button) findViewById(R.id.button_pedagogico_chat);
+        button_diretoria = (Button) findViewById(R.id.button_diretoria_chat);
 
         toolbar_chat.setNavigationOnClickListener(new View.OnClickListener(){
             @Override
@@ -41,7 +41,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        pedagogico.setOnClickListener(new View.OnClickListener() {
+        button_pedagogico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent sendIntent = new Intent("android.intent.action.MAIN");
@@ -51,7 +51,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        diretoria.setOnClickListener(new View.OnClickListener() {
+        button_diretoria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent sendIntent = new Intent("android.intent.action.MAIN");

@@ -71,13 +71,13 @@ public class RecadosCustomAdapter extends BaseAdapter implements ListAdapter {
         }
 
         //Handle TextView and display string from your list
-        TextView textRecadosDate = (TextView)view.findViewById(R.id.text_recados_date);
-        TextView textRecados = (TextView)view.findViewById(R.id.text_recados);
+        TextView textRecadosDate = (TextView)view.findViewById(R.id.text_view_date_recados);
+        TextView textRecados = (TextView)view.findViewById(R.id.text_view_text_recados);
         textRecadosDate.setText(recadosList.get(position).getDate());
         textRecados.setText(recadosList.get(position).getTextInfo());
 
         //Handle buttons and add onClickListeners
-        final Button buttonVisto = (Button)view.findViewById(R.id.buttonRecadoVisto);
+        final Button buttonVisto = (Button)view.findViewById(R.id.button_recado_visto);
 
 
         myRef.addValueEventListener(new ValueEventListener() {

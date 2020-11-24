@@ -39,9 +39,9 @@ import java.util.Date;
 
 public class FinanceiroActivity extends AppCompatActivity {
 
-    ListView listViewBoletos;
-    Button recibo_anual;
     Toolbar toolbar_financeiro;
+    ListView list_view_boletos;
+    Button recibo_anual;
 
     private static final String TAG = "Financeiro Activity";
 
@@ -57,13 +57,14 @@ public class FinanceiroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_financeiro);
 
-        listViewBoletos = (ListView) findViewById(R.id.listFinanceiro);
-        recibo_anual = (Button) findViewById(R.id.buttonImpostoDeRenda);
         toolbar_financeiro = (Toolbar) findViewById(R.id.tool_bar_financeiro);
         setSupportActionBar(toolbar_financeiro);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar_financeiro.setTitle("");
         toolbar_financeiro.setSubtitle("");
+
+        list_view_boletos = (ListView) findViewById(R.id.list_view_financeiro);
+        recibo_anual = (Button) findViewById(R.id.button_recibo_anual_financeiro);
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatase = FirebaseDatabase.getInstance();
@@ -119,7 +120,7 @@ public class FinanceiroActivity extends AppCompatActivity {
                     array.add(fInfo.getMes() + " " + fInfo.getAno());
                 }
 
-                listViewBoletos.setAdapter(adapter);
+                list_view_boletos.setAdapter(adapter);
             }
 
             @Override
@@ -127,9 +128,10 @@ public class FinanceiroActivity extends AppCompatActivity {
 
             }
         });
-        listViewBoletos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        list_view_boletos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedFromList = (listViewBoletos.getItemAtPosition(position)).toString();
+                String selectedFromList = (list_view_boletos.getItemAtPosition(position)).toString();
 
                 Bundle bundle = getIntent().getExtras();
                 String nome_aluno = bundle.getString("nome_aluno");

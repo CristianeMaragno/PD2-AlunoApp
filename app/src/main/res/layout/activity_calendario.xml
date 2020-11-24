@@ -33,7 +33,6 @@
             android:paddingTop="16dp">
 
             <TextView
-                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CALENDÁRIO"
@@ -50,7 +49,7 @@
             android:orientation="vertical">
 
             <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-                android:id="@+id/calendarView"
+                android:id="@+id/calendar_view_calendario"
                 android:layout_width="323dp"
                 android:layout_height="248dp"
                 app:layout_constraintBottom_toTopOf="@+id/listCalendar"
@@ -62,7 +61,7 @@
                 android:layout_gravity="center"/>
 
             <ListView
-                android:id="@+id/listCalendar"
+                android:id="@+id/list_view_calendario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@color/Amarelo"

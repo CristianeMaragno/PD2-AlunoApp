@@ -32,8 +32,8 @@ public class MenuActivity extends AppCompatActivity {
     ImageView diario;
     ImageView conteudo;
 
-    Button logout;
-    TextView identificadorAluno;
+    Button button_logout;
+    TextView text_view_identificador;
 
     private static final String TAG = "MenuActivity";
 
@@ -48,18 +48,18 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        agenda = (ImageView) findViewById(R.id.agendaIcon);
-        recados = (ImageView) findViewById(R.id.recadosIcon);
-        calendario = (ImageView) findViewById(R.id.calendarioIcon);
-        chat = (ImageView) findViewById(R.id.chatIcon);
-        saida = (ImageView) findViewById(R.id.saidaIcon);
-        seguranca = (ImageView) findViewById(R.id.segurancaIcon);
-        financeiro = (ImageView) findViewById(R.id.financeiroIcon);
-        diario = (ImageView) findViewById(R.id.diarioIcon);
-        conteudo = (ImageView) findViewById(R.id.conteudoIcon);
+        agenda = (ImageView) findViewById(R.id.image_view_agenda);
+        recados = (ImageView) findViewById(R.id.image_view_recados);
+        calendario = (ImageView) findViewById(R.id.image_view_calendario);
+        chat = (ImageView) findViewById(R.id.image_view_chat);
+        saida = (ImageView) findViewById(R.id.image_view_saida);
+        seguranca = (ImageView) findViewById(R.id.image_view_seguranca);
+        financeiro = (ImageView) findViewById(R.id.image_view_financeiro);
+        diario = (ImageView) findViewById(R.id.image_view_diario);
+        conteudo = (ImageView) findViewById(R.id.image_view_conteudo);
 
-        logout = (Button) findViewById(R.id.buttonLogout);
-        identificadorAluno = (TextView) findViewById(R.id.identificadorAluno);
+        button_logout = (Button) findViewById(R.id.button_logout);
+        text_view_identificador = (TextView) findViewById(R.id.text_view_identificador);
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatase = FirebaseDatabase.getInstance();
@@ -88,7 +88,7 @@ public class MenuActivity extends AppCompatActivity {
 
                     Log.d(TAG, "showData: Nome: " + uInfo.getNome());
 
-                    identificadorAluno.setText(uInfo.getNome());
+                    text_view_identificador.setText(uInfo.getNome());
                 }
             }
             @Override
@@ -96,7 +96,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        logout.setOnClickListener(new View.OnClickListener() {
+        button_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
@@ -146,7 +146,7 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i;
                 i = new Intent(MenuActivity.this, SaidaActivity.class);
-                String nome_aluno = identificadorAluno.getText().toString();
+                String nome_aluno = text_view_identificador.getText().toString();
                 if(nome_aluno == "Aluno(a)"){
                     Toast.makeText(MenuActivity.this, "Espere um momento, aplicação carregando...", Toast.LENGTH_LONG).show();
                 }else{
@@ -170,7 +170,7 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i;
                 i = new Intent(MenuActivity.this, FinanceiroActivity.class);
-                String nome_aluno = identificadorAluno.getText().toString();
+                String nome_aluno = text_view_identificador.getText().toString();
                 if(nome_aluno == "Aluno(a)"){
                     Toast.makeText(MenuActivity.this, "Espere um momento, aplicação carregando...", Toast.LENGTH_LONG).show();
                 }else{

@@ -33,7 +33,6 @@
             android:paddingTop="16dp">
 
             <TextView
-                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CHAT"
@@ -62,7 +61,7 @@
                 android:gravity="center_vertical">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonChatPedagogico"
+                    android:id="@+id/button_pedagogico_chat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -79,7 +78,7 @@
                 android:layout_weight="0.5">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonChatDireção"
+                    android:id="@+id/button_diretoria_chat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"

@@ -58,7 +58,7 @@ public class ImageAdapterDiario extends RecyclerView.Adapter<ImageAdapterDiario.
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-            text_date_diario = itemView.findViewById(R.id.text_diario_date);
+            text_date_diario = itemView.findViewById(R.id.text_date_diario);
             text_mensagem_diario = itemView.findViewById(R.id.text_mensagem_diario);
             image_view_diario = itemView.findViewById(R.id.image_view_diario);
             hide_layout = itemView.findViewById(R.id.layout_to_hide);

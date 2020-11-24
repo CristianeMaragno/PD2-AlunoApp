@@ -27,13 +27,12 @@
             app:srcCompat="@drawable/icon_logo" />
 
         <TextView
-            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email do aluno"/>
 
         <EditText
-            android:id="@+id/nomeAluno"
+            android:id="@+id/email_aluno_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/Vermelho"
@@ -44,13 +43,12 @@
             android:layout_marginBottom="20dp"/>
 
         <TextView
-            android:id="@+id/textView24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Senha"/>
 
         <EditText
-            android:id="@+id/senhaAluno"
+            android:id="@+id/senha_aluno_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/Vermelho"
@@ -61,7 +59,7 @@
             android:layout_marginBottom="15dp"/>
 
         <TextView
-            android:id="@+id/textErrorLogin"
+            android:id="@+id/text_view_error_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/Vermelho"/>
@@ -71,7 +69,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonLogin"
+                android:id="@+id/button_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -80,7 +78,7 @@
         </RelativeLayout>
 
         <ProgressBar
-            android:id="@+id/progressBarLogin"
+            android:id="@+id/progress_bar_login"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

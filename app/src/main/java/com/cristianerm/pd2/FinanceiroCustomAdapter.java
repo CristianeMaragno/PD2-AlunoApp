@@ -47,7 +47,7 @@ public class FinanceiroCustomAdapter extends BaseAdapter implements ListAdapter 
         }
 
         //Handle TextView and display string from your list
-        TextView listItemText = (TextView)view.findViewById(R.id.textGeneral);
+        TextView listItemText = (TextView)view.findViewById(R.id.text_view_general);
         listItemText.setText(array.get(position));
 
         return view;

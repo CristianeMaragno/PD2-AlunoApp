@@ -29,8 +29,8 @@ import java.util.Collections;
 
 public class RecadosActivity extends AppCompatActivity {
 
-    ListView recados;
     Toolbar toolbar_recados;
+    ListView list_view_recados;
 
     private static final String TAG = "Recados Activity";
 
@@ -45,12 +45,13 @@ public class RecadosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recados);
 
-        recados = (ListView) findViewById(R.id.listRecados);
         toolbar_recados = (Toolbar) findViewById(R.id.tool_bar_recados);
         setSupportActionBar(toolbar_recados);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar_recados.setTitle("");
         toolbar_recados.setSubtitle("");
+
+        list_view_recados = (ListView) findViewById(R.id.list_view_recados);
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatase = FirebaseDatabase.getInstance();
@@ -100,7 +101,7 @@ public class RecadosActivity extends AppCompatActivity {
 
                 }
                 Collections.reverse(recadosList);
-                recados.setAdapter(adapter);
+                list_view_recados.setAdapter(adapter);
             }
 
             @Override

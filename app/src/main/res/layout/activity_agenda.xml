@@ -33,7 +33,6 @@
             android:paddingTop="16dp">
 
             <TextView
-                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="AGENDA"
@@ -45,7 +44,7 @@
         </LinearLayout>
 
         <ListView
-            android:id="@+id/listAgenda"
+            android:id="@+id/list_view_agenda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@color/Amarelo"

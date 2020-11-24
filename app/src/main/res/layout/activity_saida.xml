@@ -35,7 +35,6 @@
             android:layout_marginRight="20dp">
 
             <TextView
-                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SAÍDA"
@@ -45,14 +44,13 @@
                 android:layout_gravity="center" />
 
             <TextView
-                android:id="@+id/textView20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Solicite a saída rápida para que deixemos o seu filho(a) pronto(a) antes de você chegar." />
 
             <Button
-                android:id="@+id/buttonSaidaRapida"
+                android:id="@+id/button_saida_rapida"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Saída Rápida"
@@ -61,29 +59,27 @@
                 android:layout_marginBottom="55dp"/>
 
             <TextView
-                android:id="@+id/textViewAutorizar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:text="No campo abaixo você pode autorizar alguém a retirar a criança da escola hoje. Não esqueça que a pessoa precisa trazer um documento de identificação" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/CampoAutorizacao_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:hint="Nome do autorizado(a)"
+                android:hint="Nome do(a) autorizado(a)"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/saidaCampoAutorizacao"
+                    android:id="@+id/edit_text_campo_autorizacao_saida"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/buttonSaidaAutorizar"
+                android:id="@+id/button_autorizar_saida"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@android:string/ok"
@@ -91,7 +87,7 @@
                 android:layout_marginBottom="20dp"/>
 
             <TextView
-                android:id="@+id/textErrorAutorizar"
+                android:id="@+id/text_view_error_saida"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/Vermelho" />

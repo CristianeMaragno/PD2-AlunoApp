@@ -30,11 +30,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button login;
-    EditText aluno;
-    EditText senha;
-    ProgressBar progressBar;
-    TextView textError;
+    EditText edit_text_email;
+    EditText edit_text_senha;
+    Button button_login;
+    TextView text_view_error;
+    ProgressBar progress_bar;
+
 
     private static final String TAG = "Main Activity";
 
@@ -49,37 +50,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        login = (Button) findViewById(R.id.buttonLogin);
-        aluno = (EditText) findViewById(R.id.nomeAluno);
-        senha = (EditText) findViewById(R.id.senhaAluno);
-        progressBar = (ProgressBar) findViewById(R.id.progressBarLogin);
-        progressBar.setVisibility(View.GONE);
-        textError = (TextView) findViewById(R.id.textErrorLogin);
+        edit_text_email = (EditText) findViewById(R.id.email_aluno_login);
+        edit_text_senha = (EditText) findViewById(R.id.senha_aluno_login);
+        button_login = (Button) findViewById(R.id.button_login);
+        text_view_error = (TextView) findViewById(R.id.text_view_error_login);
+        progress_bar = (ProgressBar) findViewById(R.id.progress_bar_login);
+
+        progress_bar.setVisibility(View.GONE);
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatase = FirebaseDatabase.getInstance();
 
-        login.setOnClickListener(new View.OnClickListener() {
+        button_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-                String email = aluno.getText().toString().trim();
+                progress_bar.setVisibility(View.VISIBLE);
+                String email = edit_text_email.getText().toString().trim();
                 email.replaceAll("\\s+","");
-                String pass = senha.getText().toString();
+                String pass = edit_text_senha.getText().toString();
                 if(!email.equals("") && !pass.equals("")){
-                    login.setEnabled(false);
-                    aluno.setEnabled(false);
-                    senha.setEnabled(false);
-                    signIn(email, pass);
+                    button_login.setEnabled(false);
+                    edit_text_email.setEnabled(false);
+                    edit_text_senha.setEnabled(false);
+                    SignIn(email, pass);
                 }else{
-                    progressBar.setVisibility(View.GONE);
-                    textError.setText("Você não preencheu todos os campos");
+                    progress_bar.setVisibility(View.GONE);
+                    text_view_error.setText("Você não preencheu todos os campos");
                 }
             }
         });
     }
 
-    private void signIn(final String email, String password) {
+    private void SignIn(final String email, String password) {
         Log.d(TAG, "signIn:" + email);
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
@@ -88,24 +90,24 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success
-                            textError.setText("");
+                            text_view_error.setText("");
                             Log.d(TAG, "signInWithEmail:success");
 
-                            checkUser(email);
-                            checkStatus();
+                            CheckUser(email);
+                            CheckStatus();
                         }
                         // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
-                            login.setEnabled(true);
-                            aluno.setEnabled(true);
-                            senha.setEnabled(true);
-                            progressBar.setVisibility(View.GONE);
+                            button_login.setEnabled(true);
+                            edit_text_email.setEnabled(true);
+                            edit_text_senha.setEnabled(true);
+                            progress_bar.setVisibility(View.GONE);
                             try {
                                 throw task.getException();
                             } catch(FirebaseAuthInvalidCredentialsException e) {
-                                textError.setText("Email ou senha incorreta");
+                                text_view_error.setText("Email ou senha incorreta");
                             } catch(FirebaseAuthUserCollisionException e) {
-                                textError.setText("Tente novamente");
+                                text_view_error.setText("Tente novamente");
                             } catch(Exception e) {
                                 Log.e(TAG, e.getMessage());
                             }
@@ -115,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         // [END sign_in_with_email]
     }
 
-    public void checkUser(final String email){
+    public void CheckUser(final String email){
         myRefUserDeletado = mFirebaseDatase.getReference().child("users_deletados");
 
         myRefUserDeletado.addValueEventListener(new ValueEventListener() {
@@ -127,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Log.d(TAG, "showData: Email: " + uInfo.getEmail());
                     String email_database = uInfo.getEmail();
-                    progressBar.setVisibility(View.GONE);
+                    progress_bar.setVisibility(View.GONE);
 
                     if(email_database.equals(email)){
                         new AlertDialog.Builder(MainActivity.this)
@@ -143,8 +145,8 @@ public class MainActivity extends AppCompatActivity {
                                 .show();
 
                         mAuth.signOut();
-                        aluno.getText().clear();
-                        senha.getText().clear();
+                        edit_text_email.getText().clear();
+                        edit_text_senha.getText().clear();
                     }
                 }
             }
@@ -154,12 +156,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
     @Override
     public void onStart() {
         super.onStart();
     }
 
-    public void checkStatus(){
+    public void CheckStatus(){
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
@@ -174,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Log.d(TAG, "showData: Status: " + uInfo.getStatus());
                     String status = uInfo.getStatus();
-                    progressBar.setVisibility(View.GONE);
+                    progress_bar.setVisibility(View.GONE);
 
                     if(status.equals("Aluno(a)")){
                         Intent i = new Intent(MainActivity.this, MenuActivity.class);
@@ -192,8 +195,8 @@ public class MainActivity extends AppCompatActivity {
                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                 .show();
 
-                        aluno.getText().clear();
-                        senha.getText().clear();
+                        edit_text_email.getText().clear();
+                        edit_text_senha.getText().clear();
                     }
                 }
             }
